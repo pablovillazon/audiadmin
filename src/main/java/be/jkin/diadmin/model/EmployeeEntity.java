@@ -18,6 +18,15 @@ public class EmployeeEntity {
     @Column(name="email", nullable=false, length=200)
     private String email;
 
+    public EmployeeEntity(){}
+
+    public EmployeeEntity(String name, String last, String email)
+    {
+        this.firstName = name;
+        this.lastName = last;
+        this.email = email;
+    }
+
     public Long getId() {
         return id;
     }
