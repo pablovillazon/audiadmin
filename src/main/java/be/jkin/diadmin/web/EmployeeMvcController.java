@@ -6,11 +6,9 @@ import be.jkin.diadmin.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,7 +18,7 @@ public class EmployeeMvcController {
     @Autowired
     EmployeeService service;
 
-    @GetMapping("/employees")
+    @GetMapping(path="/employees", produces = "application/json")
     public List<EmployeeEntity> getEmployees()
     {
         return service.getAllEmployees();
@@ -60,6 +58,14 @@ public class EmployeeMvcController {
     public String createOrUpdateEmployee(EmployeeEntity employee)
     {
         service.createOrUpdateEmployee(employee);
+        return "redirect:/";
+    }
+
+    @PostMapping("/employees")
+    public String createEmployee(@Valid @RequestBody EmployeeEntity employeeEntity)
+    {
+        EmployeeEntity employee = service.createOrUpdateEmployee(employeeEntity);
+        //return  employee;
         return "redirect:/";
     }
 }
